@@ -1,20 +1,38 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FiShoppingBag, FiUser, FiMail, FiPhone, FiMapPin, FiDollarSign } from 'react-icons/fi';
+import { FiShoppingBag, FiUser, FiMail, FiPhone, FiMapPin } from 'react-icons/fi';
 import { getCart, getCartTotal, clearCart } from '../store/cartStore';
 import API from '../api';
 import toast from 'react-hot-toast';
+
+const countries = [
+  { code: 'US', dial: '+1', name: 'United States', phoneLen: 10, phoneFormat: 'XXX-XXX-XXXX' },
+  { code: 'CA', dial: '+1', name: 'Canada', phoneLen: 10, phoneFormat: 'XXX-XXX-XXXX' },
+  { code: 'GB', dial: '+44', name: 'United Kingdom', phoneLen: 10, phoneFormat: 'XXXX-XXX-XXX' },
+  { code: 'AU', dial: '+61', name: 'Australia', phoneLen: 9, phoneFormat: 'XXX-XXX-XXX' },
+  { code: 'IN', dial: '+91', name: 'India', phoneLen: 10, phoneFormat: 'XXXXX-XXXXX' },
+  { code: 'DE', dial: '+49', name: 'Germany', phoneLen: 10, phoneFormat: 'XXXX-XXXXXX' },
+  { code: 'FR', dial: '+33', name: 'France', phoneLen: 9, phoneFormat: 'XXX-XXX-XXX' },
+  { code: 'BR', dial: '+55', name: 'Brazil', phoneLen: 10, phoneFormat: 'XXXXX-XXXX' },
+  { code: 'JP', dial: '+81', name: 'Japan', phoneLen: 10, phoneFormat: 'XXX-XXXX-XXX' },
+  { code: 'NG', dial: '+234', name: 'Nigeria', phoneLen: 10, phoneFormat: 'XXX-XXX-XXXX' },
+  { code: 'AE', dial: '+971', name: 'UAE', phoneLen: 9, phoneFormat: 'XXX-XXX-XXX' },
+  { code: 'SG', dial: '+65', name: 'Singapore', phoneLen: 8, phoneFormat: 'XXXX-XXXX' },
+];
 
 function CheckoutPage() {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user') || '{}');
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState({ subtotal: 0, itemCount: 0 });
-  const [phone, setPhone] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(countries[0]);
+  const [shippingCountry, setShippingCountry] = useState(countries[0]);
+  const [phoneDigits, setPhoneDigits] = useState('');
+  const [phoneError, setPhoneError] = useState('');
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [postalCode, setPostalCode] = useState('');
-  const [country, setCountry] = useState('');
+  const [postalError, setPostalError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -31,9 +49,58 @@ function CheckoutPage() {
     setTotal(getCartTotal(items));
   }, []);
 
+  const validatePhone = (digits, countryObj) => {
+    const cleaned = digits.replace(/\D/g, '');
+    if (!cleaned) return '';
+    if (cleaned.length !== countryObj.phoneLen) {
+      return `Phone must be ${countryObj.phoneLen} digits (${countryObj.phoneFormat})`;
+    }
+    return '';
+  };
+
+  const handlePhoneChange = (e) => {
+    const raw = e.target.value.replace(/\D/g, '');
+    if (raw.length <= selectedCountry.phoneLen) {
+      setPhoneDigits(raw);
+      setPhoneError(validatePhone(raw, selectedCountry));
+    }
+  };
+
+  const handlePhoneCountryChange = (e) => {
+    const c = countries.find((c) => c.code === e.target.value) || countries[0];
+    setSelectedCountry(c);
+    const cleaned = phoneDigits.replace(/\D/g, '');
+    if (cleaned.length > c.phoneLen) {
+      setPhoneDigits(cleaned.slice(0, c.phoneLen));
+    }
+    setPhoneError(validatePhone(phoneDigits, c));
+  };
+
+  const handlePostalChange = (e) => {
+    const val = e.target.value.replace(/\D/g, '').slice(0, 6);
+    setPostalCode(val);
+    if (val.length > 0 && val.length !== 6) {
+      setPostalError('Postal code must be exactly 6 digits');
+    } else {
+      setPostalError('');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!phone || !address || !city || !postalCode || !country) {
+
+    const phoneErr = validatePhone(phoneDigits, selectedCountry);
+    if (phoneErr) {
+      setPhoneError(phoneErr);
+      toast.error(phoneErr);
+      return;
+    }
+    if (postalCode.length !== 6) {
+      setPostalError('Postal code must be exactly 6 digits');
+      toast.error('Postal code must be exactly 6 digits');
+      return;
+    }
+    if (!address || !city) {
       toast.error('Please fill in all shipping fields');
       return;
     }
@@ -48,10 +115,12 @@ function CheckoutPage() {
         qty: item.qty,
       }));
 
+      const fullPhone = `${selectedCountry.dial} ${phoneDigits}`;
+
       await API.post('/orders', {
         orderItems,
-        shippingAddress: { address, city, postalCode, country },
-        phone,
+        shippingAddress: { address, city, postalCode, country: shippingCountry.name },
+        phone: fullPhone,
       });
 
       clearCart();
@@ -97,33 +166,57 @@ function CheckoutPage() {
             </h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Phone Number</label>
-                <div className="relative">
-                  <FiPhone className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="tel"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="Phone number"
-                    className="input-field pl-10"
-                    required
-                  />
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-2">
+                  <FiPhone className="text-indigo-500" /> Phone Number
+                </label>
+                <div className="flex gap-2">
+                  <select
+                    value={selectedCountry.code}
+                    onChange={handlePhoneCountryChange}
+                    className="input-field w-auto min-w-[130px]"
+                  >
+                    {countries.map((c) => (
+                      <option key={c.code} value={c.code}>
+                        {c.dial} {c.code}
+                      </option>
+                    ))}
+                  </select>
+                  <div className="relative flex-1">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={phoneDigits}
+                      onChange={handlePhoneChange}
+                      placeholder={`${selectedCountry.phoneLen}-digit number`}
+                      className="input-field"
+                      required
+                    />
+                    {phoneDigits && !phoneError && (
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-green-500 font-medium">
+                        {selectedCountry.dial} {phoneDigits}
+                      </span>
+                    )}
+                  </div>
                 </div>
+                {phoneError && (
+                  <p className="text-xs text-red-500 mt-1">{phoneError}</p>
+                )}
               </div>
+
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Address</label>
-                <div className="relative">
-                  <FiMapPin className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-                  <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                    placeholder="Street address"
-                    className="input-field pl-10"
-                    required
-                  />
-                </div>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-2">
+                  <FiMapPin className="text-indigo-500" /> Address
+                </label>
+                <input
+                  type="text"
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder="Street address"
+                  className="input-field"
+                  required
+                />
               </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">City</label>
@@ -140,25 +233,38 @@ function CheckoutPage() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Postal Code</label>
                   <input
                     type="text"
+                    inputMode="numeric"
                     value={postalCode}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    placeholder="Postal code"
+                    onChange={handlePostalChange}
+                    placeholder="6-digit code"
                     className="input-field"
                     required
+                    maxLength={6}
                   />
+                  {postalError && (
+                    <p className="text-xs text-red-500 mt-1">{postalError}</p>
+                  )}
                 </div>
               </div>
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Country</label>
-                <input
-                  type="text"
-                  value={country}
-                  onChange={(e) => setCountry(e.target.value)}
-                  placeholder="Country"
+                <select
+                  value={shippingCountry.code}
+                  onChange={(e) => {
+                    const c = countries.find((c) => c.code === e.target.value) || countries[0];
+                    setShippingCountry(c);
+                  }}
                   className="input-field"
-                  required
-                />
+                >
+                  {countries.map((c) => (
+                    <option key={c.code} value={c.code}>
+                      {c.name}
+                    </option>
+                  ))}
+                </select>
               </div>
+
               <button
                 type="submit"
                 disabled={submitting}
