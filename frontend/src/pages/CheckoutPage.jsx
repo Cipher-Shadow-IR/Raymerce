@@ -49,11 +49,13 @@ function CheckoutPage() {
     setTotal(getCartTotal(items));
   }, []);
 
+  const formatPhoneHint = (c) => `e.g. ${c.dial} ${'5'.repeat(c.phoneLen - 1)}${'6'}`;
+
   const validatePhone = (digits, countryObj) => {
     const cleaned = digits.replace(/\D/g, '');
     if (!cleaned) return '';
     if (cleaned.length !== countryObj.phoneLen) {
-      return `Phone must be ${countryObj.phoneLen} digits (${countryObj.phoneFormat})`;
+      return `Enter exactly ${countryObj.phoneLen} digits for ${countryObj.name} (${countryObj.dial})`;
     }
     return '';
   };
@@ -70,10 +72,9 @@ function CheckoutPage() {
     const c = countries.find((c) => c.code === e.target.value) || countries[0];
     setSelectedCountry(c);
     const cleaned = phoneDigits.replace(/\D/g, '');
-    if (cleaned.length > c.phoneLen) {
-      setPhoneDigits(cleaned.slice(0, c.phoneLen));
-    }
-    setPhoneError(validatePhone(phoneDigits, c));
+    const trimmed = cleaned.length > c.phoneLen ? cleaned.slice(0, c.phoneLen) : cleaned;
+    setPhoneDigits(trimmed);
+    setPhoneError(validatePhone(trimmed, c));
   };
 
   const handlePostalChange = (e) => {
@@ -169,11 +170,11 @@ function CheckoutPage() {
                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1 flex items-center gap-2">
                   <FiPhone className="text-indigo-500" /> Phone Number
                 </label>
-                <div className="flex gap-2">
+                <div className="flex border border-gray-300 dark:border-slate-600 rounded-lg overflow-hidden bg-white dark:bg-slate-700 focus-within:ring-2 focus-within:ring-indigo-500 focus-within:border-transparent transition-all duration-200">
                   <select
                     value={selectedCountry.code}
                     onChange={handlePhoneCountryChange}
-                    className="input-field w-auto min-w-[130px]"
+                    className="bg-transparent border-0 text-gray-900 dark:text-white text-sm py-2 pl-3 pr-1 outline-none appearance-none cursor-pointer flex-shrink-0 min-w-[70px]"
                   >
                     {countries.map((c) => (
                       <option key={c.code} value={c.code}>
@@ -181,26 +182,28 @@ function CheckoutPage() {
                       </option>
                     ))}
                   </select>
-                  <div className="relative flex-1">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={phoneDigits}
-                      onChange={handlePhoneChange}
-                      placeholder={`${selectedCountry.phoneLen}-digit number`}
-                      className="input-field"
-                      required
-                    />
-                    {phoneDigits && !phoneError && (
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-green-500 font-medium">
-                        {selectedCountry.dial} {phoneDigits}
-                      </span>
-                    )}
-                  </div>
+                  <div className="w-px bg-gray-300 dark:bg-slate-600 flex-shrink-0" />
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    value={phoneDigits}
+                    onChange={handlePhoneChange}
+                    placeholder={formatPhoneHint(selectedCountry)}
+                    className="flex-1 bg-transparent border-0 text-gray-900 dark:text-white text-sm py-2 pr-3 pl-3 outline-none placeholder-gray-400 dark:placeholder-gray-500"
+                    required
+                  />
                 </div>
-                {phoneError && (
+                {phoneError ? (
                   <p className="text-xs text-red-500 mt-1">{phoneError}</p>
-                )}
+                ) : phoneDigits.length > 0 && phoneDigits.length < selectedCountry.phoneLen ? (
+                  <p className="text-xs text-amber-500 mt-1">
+                    {phoneDigits.length} / {selectedCountry.phoneLen} digits entered
+                  </p>
+                ) : phoneDigits.length === selectedCountry.phoneLen ? (
+                  <p className="text-xs text-green-500 mt-1">
+                    {selectedCountry.dial} {phoneDigits} — looks good
+                  </p>
+                ) : null}
               </div>
 
               <div>
