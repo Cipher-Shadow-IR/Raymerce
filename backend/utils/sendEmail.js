@@ -1,15 +1,15 @@
 import nodemailer from 'nodemailer';
 
-const isConfigured = () => process.env.EMAIL_USER && process.env.EMAIL_PASS;
+const isConfigured = () => process.env.SMTP_USER && process.env.SMTP_PASS;
 
 const getTransporter = () => {
   if (isConfigured()) {
     return nodemailer.createTransport({
-      host: process.env.EMAIL_HOST || 'sandbox.smtp.mailtrap.io',
-      port: Number(process.env.EMAIL_PORT) || 2525,
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: Number(process.env.SMTP_PORT) || 587,
       auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
   }
@@ -42,7 +42,7 @@ ${order.orderItems.map(item => `║  ${item.name} × ${item.qty} — $${(item.pr
 
 const sendOrderConfirmation = async ({ to, name, order }) => {
   const message = {
-    from: `"Raymerce Store" <${process.env.EMAIL_FROM || 'orders@raymerce.com'}>`,
+    from: process.env.SMTP_FROM_EMAIL || '"TravelBharat" <noreply@travelbharat.com>',
     to,
     subject: `Order Confirmed — #${order._id.toString().slice(-8).toUpperCase()}`,
     text: buildOrderEmail(order),
