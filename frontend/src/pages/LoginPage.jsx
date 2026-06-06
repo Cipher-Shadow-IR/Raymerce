@@ -47,7 +47,7 @@ function LoginPage() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="input-field pl-10"
+                className="input-field pl-12"
                 placeholder="Email address"
               />
             </div>
@@ -63,7 +63,7 @@ function LoginPage() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="input-field pl-10 pr-10"
+                className="input-field pl-12 pr-10"
                 placeholder="Password"
                 minLength={6}
               />

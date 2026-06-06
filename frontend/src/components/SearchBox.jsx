@@ -18,7 +18,7 @@ function SearchBox({ onSearch, initial = '' }) {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search products..."
-          className="input-field pl-10"
+          className="input-field pl-12"
         />
       </div>
       <button type="submit" className="btn-primary">

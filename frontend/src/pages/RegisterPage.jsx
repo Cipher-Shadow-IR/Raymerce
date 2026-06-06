@@ -53,7 +53,7 @@ function RegisterPage() {
                 value={form.name}
                 onChange={handleChange}
                 required
-                className="input-field pl-10"
+                className="input-field pl-12"
                 placeholder="Full name"
               />
             </div>
@@ -69,7 +69,7 @@ function RegisterPage() {
                 value={form.email}
                 onChange={handleChange}
                 required
-                className="input-field pl-10"
+                className="input-field pl-12"
                 placeholder="Email address"
               />
             </div>
@@ -85,7 +85,7 @@ function RegisterPage() {
                 value={form.password}
                 onChange={handleChange}
                 required
-                className="input-field pl-10"
+                className="input-field pl-12"
                 placeholder="Password (min 6 chars)"
                 minLength={6}
               />
@@ -102,7 +102,7 @@ function RegisterPage() {
                 value={form.confirmPassword}
                 onChange={handleChange}
                 required
-                className="input-field pl-10"
+                className="input-field pl-12"
                 placeholder="Confirm password"
                 minLength={6}
               />
