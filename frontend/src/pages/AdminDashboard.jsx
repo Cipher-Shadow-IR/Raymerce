@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../api';
 import Loader from '../components/Loader';
-import { FiPackage, FiGrid, FiAlertTriangle, FiArrowRight } from 'react-icons/fi';
+import { FiPackage, FiGrid, FiAlertTriangle, FiArrowRight, FiUsers, FiList } from 'react-icons/fi';
 
 function AdminDashboard() {
   const [stats, setStats] = useState({ totalProducts: 0, totalCategories: 0, lowStock: 0 });
@@ -58,7 +58,7 @@ function AdminDashboard() {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Link
           to="/admin/products"
           className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group"
@@ -67,6 +67,32 @@ function AdminDashboard() {
             <div>
               <h3 className="font-semibold text-gray-800 dark:text-gray-200">Manage Products</h3>
               <p className="text-sm text-gray-500 mt-1">Add, edit, or remove products</p>
+            </div>
+            <FiArrowRight className="text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all text-xl" />
+          </div>
+        </Link>
+
+        <Link
+          to="/admin/users"
+          className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200">Manage Users</h3>
+              <p className="text-sm text-gray-500 mt-1">View and manage registered users</p>
+            </div>
+            <FiArrowRight className="text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all text-xl" />
+          </div>
+        </Link>
+
+        <Link
+          to="/admin/purchase-logs"
+          className="bg-white dark:bg-slate-800 rounded-xl shadow-sm p-6 hover:shadow-md transition-shadow group"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-semibold text-gray-800 dark:text-gray-200">Purchase Logs</h3>
+              <p className="text-sm text-gray-500 mt-1">View all customer orders</p>
             </div>
             <FiArrowRight className="text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-1 transition-all text-xl" />
           </div>

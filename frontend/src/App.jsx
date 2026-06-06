@@ -10,6 +10,8 @@ import RegisterPage from './pages/RegisterPage';
 import AdminDashboard from './pages/AdminDashboard';
 import ProductListPage from './pages/ProductListPage';
 import ProductEditPage from './pages/ProductEditPage';
+import UsersPage from './pages/UsersPage';
+import PurchaseLogsPage from './pages/PurchaseLogsPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderSuccessPage from './pages/OrderSuccessPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -32,6 +34,8 @@ function App() {
           <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
           <Route path="/admin/products" element={<PrivateRoute><ProductListPage /></PrivateRoute>} />
           <Route path="/admin/product/:id/edit" element={<PrivateRoute><ProductEditPage /></PrivateRoute>} />
+          <Route path="/admin/users" element={<PrivateRoute><UsersPage /></PrivateRoute>} />
+          <Route path="/admin/purchase-logs" element={<PrivateRoute><PurchaseLogsPage /></PrivateRoute>} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>

@@ -19,10 +19,23 @@
   <img src="https://img.shields.io/badge/Built%20With-React%20%7C%20Express%20%7C%20MongoDB-black?style=for-the-badge" />
 </p>
 
+### Orders
+
+| Method | Endpoint | Body | Description |
+|--------|----------|------|-------------|
+| POST | `/api/orders` | `{ orderItems, shippingAddress, phone, totalPrice }` | Place order (auth) |
+| GET | `/api/orders/:id` | — | Get order by ID (auth) |
+
+### Admin
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/users` | List all users |
+| GET | `/api/admin/users/:id` | Get user by ID |
+| DELETE | `/api/admin/users/:id` | Delete user (non-admin) |
+| GET | `/api/admin/purchase-logs` | Paginated order history with user info |
+
 ---
-
-# 📋 Raymerce
-
 > *Shop Quality Products at Great Prices.*  
 > **Raymerce** is a full-stack e-commerce platform built with production-quality engineering practices.  
 > Designed with **React 18**, **Express.js**, **MongoDB Atlas**, and **Tailwind CSS** for speed, scale, and a polished UX.
@@ -32,12 +45,19 @@
 # ✨ Features
 
 - 🔐 **Authentication** — Register, login, and JWT-based protected routes with persistent sessions.
-- 👑 **Role-Based Access** — Admin dashboard for product management with user/admin role separation.
+- 👑 **Role-Based Access** — Admin dashboard with separate user management and purchase logs.
 - 📦 **Product Management** — Full CRUD operations with image, category, price, stock, and featured flags.
 - 🔎 **Smart Search & Filters** — Search by name, filter by category and price range, sort by price/date/name.
-- 📄 **Pagination** — 8 products per page with smart page range navigation.
+- 📄 **Pagination** — 8 products per page with smart page range navigation; configurable `?pageSize` for admin.
 - 🛒 **Shopping Cart** — Add/remove items, adjust quantity, localStorage persistence, real-time badge updates.
+- 📍 **Checkout** — Shipping address form with country-code phone selector, per-country validation, 6-digit postal code.
+- ✅ **Order Success Page** — Full order summary with items, pricing breakdown, and shipping details.
 - 📊 **Admin Dashboard** — Real-time stats: total products, categories, and low-stock alerts.
+- 👥 **Admin User Management** — View all users, role badges, delete non-admin users with confirm/cancel.
+- 📋 **Admin Purchase Logs** — Paginated order history with customer info, items, and delivery status.
+- 📧 **Email Notifications** — Order confirmation emails via nodemailer (Gmail SMTP) with fallback to console mock.
+- ⚡ **Real-Time Updates** — Stock decrements on order placed, socket.io pushes `stock-updated` and `product-*` events to all clients.
+- 🔄 **Auto Stock Refill** — Cron job runs daily at midnight: adds 5 to stock if ≤ 1000, resets to 25 on overflow.
 - 📱 **Responsive** — Fully responsive design with mobile hamburger menu.
 - 🌙 **Dark Mode** — Toggle with persistent preference stored in localStorage.
 - 🔔 **Toast Notifications** — Context-based toast system with auto-dismiss for every CRUD operation.
@@ -66,6 +86,9 @@ This platform demonstrates:
 | Backend | Node.js, Express.js, ES Modules |
 | Database | MongoDB Atlas (Mongoose ODM) |
 | Auth | JWT (jsonwebtoken), bcryptjs |
+| Real-Time | socket.io (server + client) |
+| Email | nodemailer (Gmail SMTP / console mock) |
+| Scheduling | node-cron (daily stock refill) |
 | State | localStorage (cart persistence) |
 | UI Icons | React Icons (Feather) |
 | Notifications | React Hot Toast |
@@ -79,21 +102,24 @@ This platform demonstrates:
 raymerce/
 ├── backend/
 │   ├── config/          # DB connection
-│   ├── controllers/     # Route handlers (auth, product)
+│   ├── controllers/     # Route handlers (auth, product, order, admin)
 │   ├── middleware/      # Auth, error handling
 │   ├── models/          # Mongoose schemas (User, Product, Order)
 │   ├── routes/          # Express routers
-│   ├── utils/           # JWT token helper
+│   ├── utils/           # JWT token helper, sendEmail
 │   ├── seed/            # Database seeder
+│   ├── socket.js        # Socket.io server setup
+│   ├── cronJobs.js      # Daily stock refill scheduler
 │   ├── .env.example
 │   ├── server.js        # Entry point
 │   └── package.json
 ├── frontend/
 │   ├── public/          # Static assets (logo, brand, favicon)
 │   ├── src/
-│   │   ├── components/  # Header, Footer, ProductCard, Paginate, etc.
-│   │   ├── pages/       # Home, Product, Cart, Login, Register, Admin
+│   │   ├── components/  # Header, Footer, ProductCard, Paginate, InputField, etc.
+│   │   ├── pages/       # Home, Product, Cart, Login, Register, Checkout, OrderSuccess, Admin*, NotFound
 │   │   ├── store/       # Cart store (localStorage)
+│   │   ├── socket.js    # Socket.io client connection
 │   │   ├── api.js       # Axios instance with JWT interceptor
 │   │   ├── App.jsx      # Root with routes
 │   │   └── main.jsx     # Entry point

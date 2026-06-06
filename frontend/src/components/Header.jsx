@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiShoppingCart, FiUser, FiMenu, FiX, FiLogOut, FiSun, FiMoon, FiPackage, FiGrid, FiBarChart2, FiExternalLink } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiMenu, FiX, FiLogOut, FiSun, FiMoon, FiGrid, FiBarChart2, FiExternalLink, FiUsers, FiList } from 'react-icons/fi';
 import { getCart, getCartTotal } from '../store/cartStore';
 
 function Header() {
@@ -90,6 +90,12 @@ function Header() {
                 </Link>
                 <Link to="/admin/products" className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium">
                   <FiGrid size={14} /> Products
+                </Link>
+                <Link to="/admin/users" className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium">
+                  <FiUsers size={14} /> Users
+                </Link>
+                <Link to="/admin/purchase-logs" className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium">
+                  <FiList size={14} /> Purchase Logs
                 </Link>
                 <Link to="/admin" className="flex items-center gap-1.5 text-gray-600 dark:text-gray-300 hover:text-indigo-600 dark:hover:text-indigo-400 text-sm font-medium">
                   <FiBarChart2 size={14} /> Dashboard
@@ -189,6 +195,12 @@ function Header() {
                 </Link>
                 <Link to="/admin/products" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-gray-600 dark:text-gray-300 font-medium">
                   <FiGrid size={16} /> Products
+                </Link>
+                <Link to="/admin/users" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-gray-600 dark:text-gray-300 font-medium">
+                  <FiUsers size={16} /> Users
+                </Link>
+                <Link to="/admin/purchase-logs" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-gray-600 dark:text-gray-300 font-medium">
+                  <FiList size={16} /> Purchase Logs
                 </Link>
                 <Link to="/admin" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 text-gray-600 dark:text-gray-300 font-medium">
                   <FiBarChart2 size={16} /> Dashboard
