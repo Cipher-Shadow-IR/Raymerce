@@ -54,7 +54,7 @@ function RegisterPage() {
                 onChange={handleChange}
                 required
                 className="input-field pl-10"
-                placeholder="John Doe"
+                placeholder="Full name"
               />
             </div>
           </div>
@@ -70,7 +70,7 @@ function RegisterPage() {
                 onChange={handleChange}
                 required
                 className="input-field pl-10"
-                placeholder="you@example.com"
+                placeholder="Email address"
               />
             </div>
           </div>
@@ -86,7 +86,7 @@ function RegisterPage() {
                 onChange={handleChange}
                 required
                 className="input-field pl-10"
-                placeholder="At least 6 characters"
+                placeholder="Password (min 6 chars)"
                 minLength={6}
               />
             </div>
@@ -103,7 +103,7 @@ function RegisterPage() {
                 onChange={handleChange}
                 required
                 className="input-field pl-10"
-                placeholder="Confirm your password"
+                placeholder="Confirm password"
                 minLength={6}
               />
             </div>
