@@ -27,6 +27,7 @@ function RegisterPage() {
         password: form.password,
       });
       localStorage.setItem('user', JSON.stringify(data));
+      window.dispatchEvent(new Event('user-update'));
       toast.success(`Welcome, ${data.name}!`);
       navigate('/');
     } catch (err) {

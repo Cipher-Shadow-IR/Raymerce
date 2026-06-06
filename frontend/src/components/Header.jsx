@@ -5,14 +5,25 @@ import { getCart, getCartTotal } from '../store/cartStore';
 
 function Header() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    try {
+      const stored = localStorage.getItem('user');
+      return stored ? JSON.parse(stored) : null;
+    } catch { return null; }
+  });
   const [cartCount, setCartCount] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dark, setDark] = useState(localStorage.getItem('theme') === 'dark');
 
   useEffect(() => {
-    const stored = localStorage.getItem('user');
-    if (stored) setUser(JSON.parse(stored));
+    const syncUser = () => {
+      try {
+        const stored = localStorage.getItem('user');
+        setUser(stored ? JSON.parse(stored) : null);
+      } catch { setUser(null); }
+    };
+    window.addEventListener('user-update', syncUser);
+    return () => window.removeEventListener('user-update', syncUser);
   }, []);
 
   useEffect(() => {
@@ -42,7 +53,7 @@ function Header() {
 
   const logout = () => {
     localStorage.removeItem('user');
-    setUser(null);
+    window.dispatchEvent(new Event('user-update'));
     navigate('/login');
   };
 
