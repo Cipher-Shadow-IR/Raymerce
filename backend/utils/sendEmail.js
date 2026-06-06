@@ -1,50 +1,51 @@
 import nodemailer from 'nodemailer';
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || 'sandbox.smtp.mailtrap.io',
-  port: Number(process.env.EMAIL_PORT) || 2525,
-  auth: {
-    user: process.env.EMAIL_USER || '',
-    pass: process.env.EMAIL_PASS || '',
-  },
-});
+const isConfigured = () => process.env.EMAIL_USER && process.env.EMAIL_PASS;
+
+const getTransporter = () => {
+  if (isConfigured()) {
+    return nodemailer.createTransport({
+      host: process.env.EMAIL_HOST || 'sandbox.smtp.mailtrap.io',
+      port: Number(process.env.EMAIL_PORT) || 2525,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
+  }
+  return null;
+};
+
+const buildOrderEmail = (order) => `
+╔══════════════════════════════════════════════╗
+║         📦 ORDER CONFIRMATION                ║
+╠══════════════════════════════════════════════╣
+║ Order ID: #${order._id.toString().slice(-8).toUpperCase()}${' '.repeat(28)}
+║ Date: ${new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}${' '.repeat(20)}
+║ Payment: ${order.paymentMethod}${' '.repeat(25)}
+╠══════════════════════════════════════════════╣
+║ ITEMS:${' '.repeat(46)}
+${order.orderItems.map(item => `║  ${item.name} × ${item.qty} — $${(item.price * item.qty).toFixed(2)}`).join('\n')}
+╠══════════════════════════════════════════════╣
+║ Subtotal:  $${order.itemsPrice.toFixed(2)}${' '.repeat(34)}
+║ Shipping:  ${order.shippingPrice === 0 ? 'Free' : `$${order.shippingPrice.toFixed(2)}`}${' '.repeat(33)}
+║ Tax (8%):  $${order.taxPrice.toFixed(2)}${' '.repeat(34)}
+║ TOTAL:     $${order.totalPrice.toFixed(2)}${' '.repeat(34)}
+╠══════════════════════════════════════════════╣
+║ SHIPPING TO:${' '.repeat(41)}
+║  ${order.shippingAddress.address}${' '.repeat(Math.max(1, 40 - order.shippingAddress.address.length))}
+║  ${order.shippingAddress.city}, ${order.shippingAddress.postalCode}${' '.repeat(Math.max(1, 35 - order.shippingAddress.city.length - order.shippingAddress.postalCode.length))}
+║  ${order.shippingAddress.country}${' '.repeat(Math.max(1, 40 - order.shippingAddress.country.length))}
+║  Phone: ${order.phone}${' '.repeat(Math.max(1, 35 - order.phone.length))}
+╚══════════════════════════════════════════════╝
+`;
 
 const sendOrderConfirmation = async ({ to, name, order }) => {
-  const itemsList = order.orderItems
-    .map((item) => `  • ${item.name} × ${item.qty} — $${(item.price * item.qty).toFixed(2)}`)
-    .join('\n');
-
   const message = {
     from: `"Raymerce Store" <${process.env.EMAIL_FROM || 'orders@raymerce.com'}>`,
     to,
     subject: `Order Confirmed — #${order._id.toString().slice(-8).toUpperCase()}`,
-    text: `
-Hi ${name},
-
-Your order has been placed successfully!
-
-Order ID: ${order._id}
-Date: ${new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-Payment: ${order.paymentMethod}
-
-Items:
-${itemsList}
-
-Subtotal:    $${order.itemsPrice.toFixed(2)}
-Shipping:    ${order.shippingPrice === 0 ? 'Free' : `$${order.shippingPrice.toFixed(2)}`}
-Tax (8%):    $${order.taxPrice.toFixed(2)}
-Total:       $${order.totalPrice.toFixed(2)}
-
-Shipping to:
-${order.shippingAddress.address}
-${order.shippingAddress.city}, ${order.shippingAddress.postalCode}
-${order.shippingAddress.country}
-Phone: ${order.phone}
-
-Thank you for shopping at Raymerce!
-
-— Ishaan Ray (Cipher Shadow)
-`,
+    text: buildOrderEmail(order),
     html: `
 <!DOCTYPE html>
 <html>
@@ -106,12 +107,23 @@ Thank you for shopping at Raymerce!
 </html>`,
   };
 
-  try {
-    await transporter.sendMail(message);
-    console.log(`Order confirmation email sent to ${to}`);
-  } catch (err) {
-    console.warn('Email sending failed (SMTP not configured?):', err.message);
+  const transporter = getTransporter();
+
+  if (transporter) {
+    try {
+      await transporter.sendMail(message);
+      return;
+    } catch (err) {
+      console.warn('SMTP send failed, falling back to console mock:', err.message);
+    }
   }
+
+  console.log('\n' + '='.repeat(58));
+  console.log('  📧 MOCK EMAIL — Order Confirmation');
+  console.log('  To:', to);
+  console.log('  Subject:', message.subject);
+  console.log(buildOrderEmail(order));
+  console.log('='.repeat(58) + '\n');
 };
 
 export default sendOrderConfirmation;
