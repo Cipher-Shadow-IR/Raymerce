@@ -31,10 +31,13 @@ function Footer() {
             </ul>
           </div>
         </div>
-        <div className="border-t dark:border-slate-700 mt-6 pt-6 text-center text-sm text-gray-400 dark:text-gray-500 flex items-center justify-center gap-1">
-          <span>&copy; {new Date().getFullYear()} Raymerce Store. Made with</span>
-          <FiHeart className="text-red-500" />
-          <span>by Team Raymerce</span>
+        <div className="border-t dark:border-slate-700 mt-6 pt-6 text-center text-sm text-gray-400 dark:text-gray-500">
+          <span>&copy; {new Date().getFullYear()} Raymerce Store — Made with </span>
+          <FiHeart className="text-red-500 inline" />
+          <span> by </span>
+          <a href="https://github.com/Cipher-Shadow-IR" target="_blank" rel="noopener noreferrer" className="text-indigo-500 hover:text-indigo-600 font-medium">Ishaan Ray (Cipher Shadow)</a>
+          <span> | </span>
+          <a href="https://linkedin.com/in/ishaan-ray-cs" target="_blank" rel="noopener noreferrer" className="hover:text-indigo-500">LinkedIn</a>
         </div>
       </div>
     </footer>

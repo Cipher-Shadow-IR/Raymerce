@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiTrash2, FiMinus, FiPlus, FiShoppingBag, FiArrowLeft } from 'react-icons/fi';
 import { getCart, removeFromCart, updateQty, getCartTotal, clearCart } from '../store/cartStore';
 import toast from 'react-hot-toast';
 
 function CartPage() {
+  const navigate = useNavigate();
   const [cart, setCart] = useState([]);
   const [total, setTotal] = useState({ subtotal: 0, itemCount: 0 });
 
@@ -130,7 +131,7 @@ function CartPage() {
           </span>
         </div>
         <p className="text-xs text-gray-400 mb-4">Shipping & taxes calculated at checkout</p>
-        <button className="btn-secondary w-full">Proceed to Checkout</button>
+        <button onClick={() => navigate('/checkout')} className="btn-secondary w-full">Proceed to Checkout</button>
       </div>
     </div>
   );
