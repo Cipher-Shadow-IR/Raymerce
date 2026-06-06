@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../api';
 import Loader from '../components/Loader';
@@ -14,7 +14,7 @@ function PurchaseLogsPage() {
   const [pages, setPages] = useState(1);
   const [total, setTotal] = useState(0);
 
-  const fetchLogs = async () => {
+  const fetchLogs = useCallback(async () => {
     setLoading(true);
     try {
       const { data } = await API.get(`/admin/purchase-logs?pageNumber=${page}&pageSize=15`);
@@ -27,11 +27,29 @@ function PurchaseLogsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [page]);
 
   useEffect(() => {
     fetchLogs();
-  }, [page]);
+  }, [fetchLogs]);
+
+  useEffect(() => {
+    const pending = orders.filter((o) => !o.isDelivered);
+    if (pending.length === 0) return;
+
+    const timer = setTimeout(async () => {
+      for (const order of pending) {
+        try {
+          await API.put(`/admin/orders/${order._id}/deliver`);
+        } catch {
+          // skip failed
+        }
+      }
+      fetchLogs();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [orders, fetchLogs]);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
