@@ -213,6 +213,57 @@ Base URL: `http://localhost:5000/api`
 
 ---
 
+# 🔐 Environment Variables
+
+```env
+PORT=5000
+MONGO_URI=mongodb+srv://<user>:<password>@cluster0.xxxxx.mongodb.net/raymerce_store?retryWrites=true&w=majority
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRES_IN=30d
+VITE_API_URL=http://localhost:5000/api
+```
+
+---
+
+# 📦 Response Format
+
+### Success
+```json
+{
+  "_id": "665a1b2c3d4e5f6a7b8c9d0e",
+  "name": "Wireless Bluetooth Headphones",
+  "price": 79.99,
+  "stock": 25
+}
+```
+
+### Error
+```json
+{
+  "message": "Product not found",
+  "stack": "Error: Product not found\n    at ..."
+}
+```
+
+> `stack` is only shown in development mode (`NODE_ENV=development`).
+
+---
+
+# 📈 Future Improvements
+
+- Order management system with status tracking
+- Payment gateway integration (Stripe / PayPal)
+- Product reviews and ratings
+- User profile management with avatar upload
+- Email notifications for orders
+- Wishlist functionality
+- Coupon and discount system
+- Unit and integration tests
+- Docker containerization
+- CI/CD pipeline with GitHub Actions
+
+---
+
 # 🌱 Roadmap
 
 - [x] JWT authentication with register/login
@@ -233,6 +284,28 @@ Base URL: `http://localhost:5000/api`
 
 ---
 
+# 💬 Author
+
+<p align="center">
+  <b>Built by Ishaan Ray (Cipher Shadow IR)</b><br>
+  <i>"Shop Quality Products at Great Prices."</i><br><br>
+  <a href="https://github.com/Cipher-Shadow-IR" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub-Cipher%20Shadow%20IR-181717?style=for-the-badge&logo=github" />
+  </a>
+</p>
+
+---
+
+# ⭐ Support
+
+If you liked this project:
+
+```md
+Give it a star ⭐
+```
+
+---
+
 # 📜 License
 
 MIT License
@@ -240,6 +313,6 @@ MIT License
 ---
 
 <p align="center">
-  <b>Built with ❤️ by the Raymerce Team</b><br>
+  <b>Built with ❤️ by Ishaan Ray (Cipher Shadow IR)</b><br>
   <i>"Shop Quality Products at Great Prices."</i>
 </p>
