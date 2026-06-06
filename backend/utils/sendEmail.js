@@ -41,6 +41,10 @@ ${order.orderItems.map(item => `║  ${item.name} × ${item.qty} — $${(item.pr
 `;
 
 const sendOrderConfirmation = async ({ to, name, order }) => {
+  if (!order) {
+    console.warn('sendOrderConfirmation skipped: no order provided');
+    return;
+  }
   const message = {
     from: process.env.SMTP_FROM_EMAIL || '"TravelBharat" <noreply@travelbharat.com>',
     to,
