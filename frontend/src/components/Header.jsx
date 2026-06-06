@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiShoppingCart, FiUser, FiMenu, FiX, FiLogOut, FiSun, FiMoon, FiPackage } from 'react-icons/fi';
+import { FiShoppingCart, FiUser, FiMenu, FiX, FiLogOut, FiSun, FiMoon } from 'react-icons/fi';
 import { getCart, getCartTotal } from '../store/cartStore';
 
 function Header() {
@@ -50,9 +50,9 @@ function Header() {
     <header className="bg-white dark:bg-slate-800 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center gap-2 text-xl font-bold text-indigo-600 dark:text-indigo-400">
-            <FiPackage className="text-2xl" />
-            <span>Raymerce</span>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/Raymerce_logo.png" alt="Raymerce" className="h-8 w-auto" />
+            <span className="text-xl font-bold text-indigo-600 dark:text-indigo-400">Raymerce</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">

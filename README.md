@@ -1,283 +1,245 @@
-# Raymerce Store - MERN E-Commerce Application
+<p align="center">
+  <img src="frontend/public/Raymerce_brand.png" alt="Raymerce Banner" width="300" />
+</p>
 
-A full-stack e-commerce application built with the MERN stack (MongoDB, Express.js, React, Node.js).
+<p align="center">
+  <img src="https://img.shields.io/badge/Raymerce-E--Commerce-6366f1?style=for-the-badge&logo=shopify" alt="Raymerce" />
+</p>
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![React](https://img.shields.io/badge/React-18.3-61DAFB)
-![Express](https://img.shields.io/badge/Express-4.21-000000)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
-![JWT](https://img.shields.io/badge/Auth-JWT-purple)
+<p align="center">
+  <img src="https://readme-typing-svg.herokuapp.com?font=Cambria&size=34&duration=4000&color=6366F1&center=true&vCenter=true&width=1000&height=70&lines=RAYMERCE+%7C+Production-Grade+E-Commerce;Shop+Quality+Products+at+Great+Prices" alt="Typing SVG" />
+</p>
 
-## 🚀 Features
+<h2 align="center">🚀 A production-ready e-commerce platform built with the MERN stack.</h2>
 
-### Authentication & Authorization
-- User registration and login with JWT
-- Password hashing with bcryptjs (12 salt rounds)
-- Role-based access control (User / Admin)
-- Protected admin routes with middleware
+<p align="center">
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Version-1.0-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/License-MIT-purple?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Built%20With-React%20%7C%20Express%20%7C%20MongoDB-black?style=for-the-badge" />
+</p>
 
-### Product Management
-- Full CRUD operations for products
-- Product schema: name, image, category, price, description, stock, featured
-- Image URLs with automatic placeholder fallback
-- Featured products section on homepage
+---
 
-### Product Listing & Discovery
-- Responsive product grid with card layout
-- Search by product name (regex, case-insensitive)
-- Filter by category dropdown
-- Filter by price range (min/max)
-- Sort by: newest, oldest, price (low-high / high-low), name (A-Z / Z-A)
-- Pagination (8 products per page)
-- Combined filters work together with URL query params
+# 📋 Raymerce
 
-### Shopping Cart
-- Add to cart with quantity selection
-- Remove items from cart
-- Increase/decrease quantity (min 1, max stock)
-- Cart total calculation (subtotal, item count)
-- Persistent cart in localStorage
-- Cart badge in navbar with real-time updates
-- Clear cart functionality
+> *Shop Quality Products at Great Prices.*  
+> **Raymerce** is a full-stack e-commerce platform built with production-quality engineering practices.  
+> Designed with **React 18**, **Express.js**, **MongoDB Atlas**, and **Tailwind CSS** for speed, scale, and a polished UX.
 
-### Admin Dashboard
-- Dashboard statistics cards: total products, categories, low-stock items
-- Product management table with image preview
-- Add new product form
-- Edit existing product form (pre-populated)
-- Delete product with confirmation flow
-- Admin-only route protection
+---
 
-### User Interface
-- Modern e-commerce design with Tailwind CSS
-- Fully responsive (mobile, tablet, desktop)
-- Dark mode toggle with persistent preference
-- Toast notifications for all actions
-- Skeleton loading cards
-- Loading spinner and error message components
-- 404 page for unknown routes
-- Mobile hamburger menu
+# ✨ Features
 
-## 🛠 Tech Stack
+- 🔐 **Authentication** — Register, login, and JWT-based protected routes with persistent sessions.
+- 👑 **Role-Based Access** — Admin dashboard for product management with user/admin role separation.
+- 📦 **Product Management** — Full CRUD operations with image, category, price, stock, and featured flags.
+- 🔎 **Smart Search & Filters** — Search by name, filter by category and price range, sort by price/date/name.
+- 📄 **Pagination** — 8 products per page with smart page range navigation.
+- 🛒 **Shopping Cart** — Add/remove items, adjust quantity, localStorage persistence, real-time badge updates.
+- 📊 **Admin Dashboard** — Real-time stats: total products, categories, and low-stock alerts.
+- 📱 **Responsive** — Fully responsive design with mobile hamburger menu.
+- 🌙 **Dark Mode** — Toggle with persistent preference stored in localStorage.
+- 🔔 **Toast Notifications** — Context-based toast system with auto-dismiss for every CRUD operation.
+- ⏳ **Loading States** — Skeleton loaders and spinners during async operations.
+- 🎯 **Empty States** — Contextual messaging when cart is empty or filters yield no results.
 
-### Frontend
-- **React 18** with **Vite** for fast development
-- **React Router v6** for client-side routing
-- **Axios** for HTTP requests with JWT interceptor
-- **Tailwind CSS 3** for utility-first styling
-- **React Hot Toast** for notifications
-- **React Icons** (Feather icons)
+---
 
-### Backend
-- **Node.js** with **Express.js** server
-- **MongoDB Atlas** with **Mongoose** ODM
-- **JWT** (jsonwebtoken) for authentication
-- **bcryptjs** for password hashing
-- **express-async-handler** for clean error handling
-- **cors** for cross-origin requests
+# 💡 Why This Project?
 
-## 📁 Project Structure
+This platform demonstrates:
 
-```
-Raymerce-Store/
+- **MVC Architecture**: Clean separation of models, controllers, and routes.
+- **REST API Design**: Consistent endpoint patterns with centralized error handling.
+- **UI/UX Focus**: Loading states, empty states, toast feedback, dark mode, and responsive design.
+- **Security**: JWT middleware, bcrypt password hashing, role-based authorization.
+- **Validation**: Backend input validation with Mongoose + frontend form guards.
+
+---
+
+# 🧩 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Frontend | React 18, Vite, Tailwind CSS, React Router v6, Axios |
+| Backend | Node.js, Express.js, ES Modules |
+| Database | MongoDB Atlas (Mongoose ODM) |
+| Auth | JWT (jsonwebtoken), bcryptjs |
+| State | localStorage (cart persistence) |
+| UI Icons | React Icons (Feather) |
+| Notifications | React Hot Toast |
+| Deployment | Frontend: Vercel, Backend: Render |
+
+---
+
+# 📂 Project Structure
+
+```plaintext
+raymerce/
 ├── backend/
-│   ├── config/
-│   │   └── db.js               # MongoDB connection
-│   ├── controllers/
-│   │   ├── authController.js    # Register, login, profile
-│   │   └── productController.js # CRUD + search/filter/sort/paginate
-│   ├── middleware/
-│   │   ├── authMiddleware.js    # JWT protect + admin guard
-│   │   └── errorMiddleware.js   # Centralized error handling
-│   ├── models/
-│   │   ├── User.js              # User schema with bcrypt
-│   │   ├── Product.js           # Product schema with text index
-│   │   └── Order.js             # Order schema for future use
-│   ├── routes/
-│   │   ├── authRoutes.js        # /api/auth/*
-│   │   └── productRoutes.js     # /api/products/*
-│   ├── utils/
-│   │   └── generateToken.js     # JWT sign helper
-│   ├── seed/
-│   │   └── seed.js              # Database seeder (12 products, 2 users)
+│   ├── config/          # DB connection
+│   ├── controllers/     # Route handlers (auth, product)
+│   ├── middleware/      # Auth, error handling
+│   ├── models/          # Mongoose schemas (User, Product, Order)
+│   ├── routes/          # Express routers
+│   ├── utils/           # JWT token helper
+│   ├── seed/            # Database seeder
 │   ├── .env.example
-│   ├── package.json
-│   └── server.js                # Entry point
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── Header.jsx       # Navbar with cart badge, dark mode, auth
-│   │   │   ├── Footer.jsx       # Footer with links and contact
-│   │   │   ├── ProductCard.jsx  # Product grid card
-│   │   │   ├── SearchBox.jsx    # Search input
-│   │   │   ├── Paginate.jsx     # Pagination component
-│   │   │   ├── Loader.jsx       # Spinner loader
-│   │   │   ├── SkeletonCard.jsx # Skeleton loader
-│   │   │   ├── Message.jsx      # Alert/error messages
-│   │   │   └── PrivateRoute.jsx # Admin route guard
-│   │   ├── pages/
-│   │   │   ├── HomePage.jsx     # Product listing with filters
-│   │   │   ├── ProductPage.jsx  # Product detail view
-│   │   │   ├── CartPage.jsx     # Shopping cart
-│   │   │   ├── LoginPage.jsx    # User login
-│   │   │   ├── RegisterPage.jsx # User registration
-│   │   │   ├── AdminDashboard.jsx   # Admin stats
-│   │   │   ├── ProductListPage.jsx  # Admin product management
-│   │   │   ├── ProductEditPage.jsx  # Add/Edit product form
-│   │   │   └── NotFoundPage.jsx     # 404 page
-│   │   ├── store/
-│   │   │   └── cartStore.js     # localStorage cart
-│   │   ├── api.js               # Axios instance with JWT interceptor
-│   │   ├── App.jsx              # Root component with routes
-│   │   ├── main.jsx             # Entry point
-│   │   └── index.css            # Tailwind + custom styles
-│   ├── .env.example
-│   ├── index.html
-│   ├── vite.config.js           # Vite config with proxy
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
+│   ├── server.js        # Entry point
 │   └── package.json
-├── vercel.json                  # Vercel deployment config
-├── render.yaml                  # Render deployment config
+├── frontend/
+│   ├── public/          # Static assets (logo, brand, favicon)
+│   ├── src/
+│   │   ├── components/  # Header, Footer, ProductCard, Paginate, etc.
+│   │   ├── pages/       # Home, Product, Cart, Login, Register, Admin
+│   │   ├── store/       # Cart store (localStorage)
+│   │   ├── api.js       # Axios instance with JWT interceptor
+│   │   ├── App.jsx      # Root with routes
+│   │   └── main.jsx     # Entry point
+│   ├── index.html
+│   └── package.json
+├── vercel.json           # Vercel deployment config
+├── render.yaml           # Render deployment config
 ├── .gitignore
 └── README.md
 ```
 
-## 🚦 API Endpoints
+---
 
-### Authentication
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| POST | `/api/auth/register` | Register new user | No |
-| POST | `/api/auth/login` | Login user | No |
-| GET | `/api/auth/profile` | Get user profile | JWT |
+# ⚙️ Installation
 
-### Products
-| Method | Endpoint | Description | Auth |
-|--------|----------|-------------|------|
-| GET | `/api/products` | List products (search, filter, sort, paginate) | No |
-| GET | `/api/products/featured` | Get featured products | No |
-| GET | `/api/products/:id` | Get single product | No |
-| POST | `/api/products` | Create product | Admin |
-| PUT | `/api/products/:id` | Update product | Admin |
-| DELETE | `/api/products/:id` | Delete product | Admin |
+```bash
+git clone https://github.com/yourusername/raymerce.git
+cd raymerce
+```
 
-### Query Parameters for GET /api/products
-- `keyword` - Search by name
-- `category` - Filter by category
-- `minPrice` / `maxPrice` - Filter by price range
-- `sort` - Sort option (`-createdAt`, `price`, `-price`, `name`, `-name`)
-- `pageNumber` - Page number (default: 1)
-- `pageSize` - Items per page (default: 8)
+---
 
-## 🧪 Getting Started
+# ▶️ Run Locally
 
 ### Prerequisites
 - Node.js 18+
 - MongoDB Atlas account (or local MongoDB)
-- npm or yarn
 
-### Installation
+### 1. Configure Backend
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/raymerce-store.git
-cd raymerce-store
-```
-
-2. Install backend dependencies:
 ```bash
 cd backend
-npm install
-```
-
-3. Install frontend dependencies:
-```bash
-cd ../frontend
-npm install
-```
-
-4. Configure environment variables:
-```bash
-cd ../backend
 cp .env.example .env
 # Edit .env with your MongoDB URI and JWT secret
+npm install
+npm run seed   # Seed database with sample data
+npm run dev    # Start backend on port 5000
 ```
 
-5. Seed the database:
+### 2. Configure Frontend
+
 ```bash
-npm run seed
+cd frontend
+npm install
+npm run dev    # Start frontend on port 3000
 ```
 
-6. Start the backend (in one terminal):
-```bash
-npm run dev
-```
-
-7. Start the frontend (in another terminal):
-```bash
-cd ../frontend
-npm run dev
-```
-
-8. Open http://localhost:3000 in your browser
+Open [http://localhost:3000](http://localhost:3000).
 
 ### Demo Credentials
-- **Admin:** admin@raymerce.com / admin123
-- **User:** user@test.com / user123
 
-## ☁️ Deployment
+| Role | Email | Password |
+|------|-------|----------|
+| Admin | admin@raymerce.com | admin123 |
+| User | user@test.com | user123 |
+
+---
+
+# 📬 API Reference
+
+Base URL: `http://localhost:5000/api`
+
+### Health
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health` | Health check |
+
+### Auth
+
+| Method | Endpoint | Body | Description |
+|--------|----------|------|-------------|
+| POST | `/api/auth/register` | `{ name, email, password }` | Register user |
+| POST | `/api/auth/login` | `{ email, password }` | Login |
+| GET | `/api/auth/profile` | — | Get user profile (Bearer token) |
+
+### Products
+
+| Method | Endpoint | Query / Body | Description |
+|--------|----------|--------------|-------------|
+| GET | `/api/products` | `?keyword=&category=&minPrice=&maxPrice=&sort=&pageNumber=` | List / filter / search / paginate |
+| GET | `/api/products/featured` | — | Featured products |
+| GET | `/api/products/:id` | — | Get product by ID |
+| POST | `/api/products` | `{ name, image?, category, price, description, stock, featured? }` | Create product (Admin) |
+| PUT | `/api/products/:id` | `{ name?, image?, category?, price?, description?, stock?, featured? }` | Update product (Admin) |
+| DELETE | `/api/products/:id` | — | Delete product (Admin) |
+
+---
+
+# ☁️ Deployment
 
 ### Backend on Render
 
-1. Push your code to GitHub
+1. Push code to GitHub
 2. Create a new Web Service on Render
-3. Connect your repository
-4. Set:
-   - **Root Directory:** `backend`
-   - **Build Command:** `npm install`
-   - **Start Command:** `npm start`
-5. Add environment variables:
-   - `NODE_ENV`: `production`
-   - `MONGO_URI`: Your MongoDB Atlas URI
-   - `JWT_SECRET`: A secure random string
-   - `JWT_EXPIRES_IN`: `30d`
-
-Alternatively, use the included `render.yaml`:
-- Go to https://dashboard.render.com/blueprints
-- Connect your repository
-- Set the `MONGO_URI` and `JWT_SECRET` environment variables
+3. Set root directory to `backend`
+4. Build command: `npm install`, Start command: `npm start`
+5. Add env vars: `MONGO_URI`, `JWT_SECRET`, `NODE_ENV=production`
 
 ### Frontend on Vercel
 
-1. Push your code to GitHub
-2. Import your repository on Vercel
-3. Configure:
-   - **Framework:** Vite
-   - **Root Directory:** `frontend`
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `dist`
-4. Add environment variable:
-   - `VITE_API_URL`: Your Render backend URL (e.g., `https://raymerce-store.onrender.com/api`)
-5. Deploy
+1. Import GitHub repo on Vercel
+2. Framework: Vite, root: `frontend`
+3. Add env var: `VITE_API_URL=https://your-backend.onrender.com/api`
+4. Deploy
 
-The `vercel.json` at the root handles SPA routing (all routes fallback to index.html).
+---
 
-## 📸 Screenshots
+# 🧠 How It Works
 
-| Page | Description |
-|------|-------------|
-| Home | Product grid with search, filters, sort, pagination |
-| Product | Detail view with quantity selector and add to cart |
-| Cart | Cart items with quantity controls and totals |
-| Login | Login form with demo credentials |
-| Admin | Dashboard with stats and product management |
+1. **Browse Products**: Visit the home page to see products in a responsive grid with skeleton loaders.
+2. **Search & Filter**: Use the search bar, category dropdown, and price range filters — all sync via URL params.
+3. **Product Details**: Click any product to view full details, adjust quantity, and add to cart.
+4. **Shopping Cart**: Review items, adjust quantities, or remove items — cart persists in localStorage.
+5. **Register / Login**: Create an account or sign in to access admin features.
+6. **Admin Dashboard**: View stats, manage products (add, edit, delete with confirmation).
 
-## 🤝 Contributing
+---
 
-Contributions are welcome! Please open an issue or submit a pull request.
+# 🌱 Roadmap
 
-## 📄 License
+- [x] JWT authentication with register/login
+- [x] Product CRUD with validation
+- [x] Search, filter, sort, and pagination
+- [x] Shopping cart with localStorage
+- [x] Admin dashboard with stats
+- [x] Dark mode toggle
+- [x] Skeleton loaders and empty states
+- [x] Toast notification system
+- [x] Responsive design
+- [x] Deployment configs (Vercel + Render)
+- [ ] Order management system
+- [ ] Payment gateway integration (Stripe/PayPal)
+- [ ] Product reviews and ratings
+- [ ] User profile management
+- [ ] Email notifications
 
-This project is created for internship evaluation purposes.
+---
+
+# 📜 License
+
+MIT License
+
+---
+
+<p align="center">
+  <b>Built with ❤️ by the Raymerce Team</b><br>
+  <i>"Shop Quality Products at Great Prices."</i>
+</p>
