@@ -26,8 +26,8 @@ function Footer() {
             <h3 className="font-semibold mb-3 text-gray-700 dark:text-gray-300">Contact</h3>
             <ul className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
               <li>support@raymerce.com</li>
-              <li>1-800-REMiRIND</li>
-              <li>San Francisco, CA</li>
+              <li>1-800-RayMerce</li>
+              <li>Gujarat, India</li>
             </ul>
           </div>
         </div>

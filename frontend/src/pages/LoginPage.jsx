@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../api';
 import { FiMail, FiLock, FiEye, FiEyeOff } from 'react-icons/fi';
+import InputField from '../components/InputField';
 import toast from 'react-hot-toast';
 
 function LoginPage() {
@@ -37,45 +38,40 @@ function LoginPage() {
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-6">Sign In</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-            <div className="relative">
-              <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px]"
-                placeholder="Email address"
-              />
-            </div>
-          </div>
+          <InputField
+            icon={FiMail}
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="Email address"
+            required
+            autoComplete="email"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
-            <div className="relative">
-              <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type={showPw ? 'text' : 'password'}
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px] pr-10"
-                placeholder="Password"
-                minLength={6}
-              />
+          <InputField
+            icon={FiLock}
+            label="Password"
+            name="password"
+            type={showPw ? 'text' : 'password'}
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Password"
+            required
+            minLength={6}
+            autoComplete="current-password"
+            rightElement={
               <button
                 type="button"
                 onClick={() => setShowPw(!showPw)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 p-1"
+                tabIndex={-1}
               >
-                {showPw ? <FiEyeOff /> : <FiEye />}
+                {showPw ? <FiEyeOff size={18} /> : <FiEye size={18} />}
               </button>
-            </div>
-          </div>
+            }
+          />
 
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? 'Signing in...' : 'Sign In'}

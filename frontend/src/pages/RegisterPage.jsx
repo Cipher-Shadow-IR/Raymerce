@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../api';
 import { FiUser, FiMail, FiLock } from 'react-icons/fi';
+import InputField from '../components/InputField';
 import toast from 'react-hot-toast';
 
 function RegisterPage() {
@@ -43,71 +44,54 @@ function RegisterPage() {
         <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-gray-200 mb-6">Create Account</h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
-            <div className="relative">
-              <FiUser className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                name="name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px]"
-                placeholder="Full name"
-              />
-            </div>
-          </div>
+          <InputField
+            icon={FiUser}
+            label="Name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Full name"
+            required
+            autoComplete="name"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
-            <div className="relative">
-              <FiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px]"
-                placeholder="Email address"
-              />
-            </div>
-          </div>
+          <InputField
+            icon={FiMail}
+            label="Email"
+            name="email"
+            type="email"
+            value={form.email}
+            onChange={handleChange}
+            placeholder="Email address"
+            required
+            autoComplete="email"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
-            <div className="relative">
-              <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px]"
-                placeholder="Password (min 6 chars)"
-                minLength={6}
-              />
-            </div>
-          </div>
+          <InputField
+            icon={FiLock}
+            label="Password"
+            name="password"
+            type="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Password (min 6 chars)"
+            required
+            minLength={6}
+            autoComplete="new-password"
+          />
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
-            <div className="relative">
-              <FiLock className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
-                type="password"
-                name="confirmPassword"
-                value={form.confirmPassword}
-                onChange={handleChange}
-                required
-                className="input-field pl-[68px]"
-                placeholder="Confirm password"
-                minLength={6}
-              />
-            </div>
-          </div>
+          <InputField
+            icon={FiLock}
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            value={form.confirmPassword}
+            onChange={handleChange}
+            placeholder="Confirm password"
+            required
+            minLength={6}
+            autoComplete="new-password"
+          />
 
           <button type="submit" disabled={loading} className="btn-primary w-full">
             {loading ? 'Creating account...' : 'Register'}
