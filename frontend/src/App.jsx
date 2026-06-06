@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -15,6 +16,7 @@ import PrivateRoute from './components/PrivateRoute';
 function App() {
   return (
     <div className="flex flex-col min-h-screen">
+      <Toaster position="top-right" toastOptions={{ duration: 3000, style: { fontSize: '14px' } }} />
       <Header />
       <main className="flex-1">
         <Routes>
