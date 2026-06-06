@@ -174,10 +174,10 @@ function CheckoutPage() {
                   <select
                     value={selectedCountry.code}
                     onChange={handlePhoneCountryChange}
-                    className="bg-transparent border-0 text-gray-900 dark:text-white text-sm py-2 pl-3 pr-1 outline-none appearance-none cursor-pointer flex-shrink-0 min-w-[70px]"
+                    className="bg-transparent border-0 text-gray-900 dark:text-white text-sm py-2 pl-3 pr-1 outline-none appearance-none cursor-pointer flex-shrink-0 min-w-[70px] dark:bg-slate-700"
                   >
                     {countries.map((c) => (
-                      <option key={c.code} value={c.code}>
+                      <option key={c.code} value={c.code} className="bg-white dark:bg-slate-700 text-gray-900 dark:text-white">
                         {c.dial} {c.code}
                       </option>
                     ))}
@@ -261,7 +261,7 @@ function CheckoutPage() {
                   className="input-field"
                 >
                   {countries.map((c) => (
-                    <option key={c.code} value={c.code}>
+                    <option key={c.code} value={c.code} className="bg-white dark:bg-slate-700 text-gray-900 dark:text-white">
                       {c.name}
                     </option>
                   ))}
