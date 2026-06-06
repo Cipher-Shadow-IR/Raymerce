@@ -118,7 +118,7 @@ function CheckoutPage() {
 
       const fullPhone = `${selectedCountry.dial} ${phoneDigits}`;
 
-      await API.post('/orders', {
+      const { data } = await API.post('/orders', {
         orderItems,
         shippingAddress: { address, city, postalCode, country: shippingCountry.name },
         phone: fullPhone,
@@ -127,7 +127,7 @@ function CheckoutPage() {
       clearCart();
       window.dispatchEvent(new Event('cart-update'));
       toast.success('Order placed successfully!');
-      navigate('/');
+      navigate('/order/success', { state: { order: data } });
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to place order');
     } finally {

@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Order from '../models/Order.js';
+import sendOrderConfirmation from '../utils/sendEmail.js';
 
 const createOrder = asyncHandler(async (req, res) => {
   const { orderItems, shippingAddress, phone } = req.body;
@@ -18,11 +19,18 @@ const createOrder = asyncHandler(async (req, res) => {
     user: req.user._id,
     orderItems,
     shippingAddress,
+    phone,
     paymentMethod: 'Cash on Delivery',
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
+  });
+
+  sendOrderConfirmation({
+    to: req.user.email,
+    name: req.user.name,
+    order,
   });
 
   res.status(201).json(order);
