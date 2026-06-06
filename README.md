@@ -287,10 +287,13 @@ VITE_API_URL=http://localhost:5000/api
 # 💬 Author
 
 <p align="center">
-  <b>Built by Ishaan Ray (Cipher Shadow IR)</b><br>
+  <b>Built by Ishaan Ray (Cipher Shadow)</b><br>
   <i>"Shop Quality Products at Great Prices."</i><br><br>
   <a href="https://github.com/Cipher-Shadow-IR" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-Cipher%20Shadow%20IR-181717?style=for-the-badge&logo=github" />
+    <img src="https://img.shields.io/badge/GitHub-Cipher%20Shadow-181717?style=for-the-badge&logo=github" />
+  </a>
+  <a href="https://linkedin.com/in/ishaan-ray-cs" target="_blank">
+    <img src="https://img.shields.io/badge/LinkedIn-Ishaan%20Ray-0A66C2?style=for-the-badge&logo=linkedin" />
   </a>
 </p>
 
@@ -313,6 +316,6 @@ MIT License
 ---
 
 <p align="center">
-  <b>Built with ❤️ by Ishaan Ray (Cipher Shadow IR)</b><br>
+  <b>Built with ❤️ by Ishaan Ray (Cipher Shadow)</b><br>
   <i>"Shop Quality Products at Great Prices."</i>
 </p>
