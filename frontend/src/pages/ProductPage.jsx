@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import API from '../api';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
+import socket from '../socket';
 import { FiShoppingCart, FiMinus, FiPlus, FiArrowLeft } from 'react-icons/fi';
 import { addToCart } from '../store/cartStore';
 import toast from 'react-hot-toast';
@@ -27,6 +28,26 @@ function ProductPage() {
       }
     };
     fetchProduct();
+  }, [id]);
+
+  useEffect(() => {
+    const handleStockUpdate = ({ productId, stock }) => {
+      if (productId === id) {
+        setProduct((prev) => (prev ? { ...prev, stock } : prev));
+      }
+    };
+    const handleProductUpdate = (updated) => {
+      if (updated._id === id) {
+        setProduct(updated);
+      }
+    };
+
+    socket.on('stock-updated', handleStockUpdate);
+    socket.on('product-updated', handleProductUpdate);
+    return () => {
+      socket.off('stock-updated', handleStockUpdate);
+      socket.off('product-updated', handleProductUpdate);
+    };
   }, [id]);
 
   const handleAdd = () => {

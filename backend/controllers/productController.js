@@ -1,5 +1,6 @@
 import asyncHandler from 'express-async-handler';
 import Product from '../models/Product.js';
+import { getIO } from '../socket.js';
 
 const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 8;
@@ -64,6 +65,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   if (product) {
     res.status(201).json(product);
+    getIO().emit('product-created', product.toJSON());
   } else {
     res.status(400);
     throw new Error('Invalid product data');
@@ -84,6 +86,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     const updated = await product.save();
     res.json(updated);
+    getIO().emit('product-updated', updated.toJSON());
   } else {
     res.status(404);
     throw new Error('Product not found');
@@ -96,6 +99,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   if (product) {
     await Product.deleteOne({ _id: req.params.id });
     res.json({ message: 'Product removed' });
+    getIO().emit('product-deleted', req.params.id);
   } else {
     res.status(404);
     throw new Error('Product not found');

@@ -6,6 +6,7 @@ import SkeletonCard from '../components/SkeletonCard';
 import Message from '../components/Message';
 import SearchBox from '../components/SearchBox';
 import Paginate from '../components/Paginate';
+import socket from '../socket';
 import { FiFilter, FiX } from 'react-icons/fi';
 
 function HomePage() {
@@ -53,6 +54,37 @@ function HomePage() {
   useEffect(() => {
     fetchProducts();
   }, [searchParams, page]);
+
+  useEffect(() => {
+    const handleStockUpdate = ({ productId, stock }) => {
+      setProducts((prev) =>
+        prev.map((p) => (p._id === productId ? { ...p, stock } : p))
+      );
+    };
+    const handleProductUpdate = ({ _id, ...rest }) => {
+      setProducts((prev) =>
+        prev.map((p) => (p._id === _id ? { ...p, ...rest } : p))
+      );
+    };
+    const handleProductCreate = () => {
+      fetchProducts();
+    };
+    const handleProductDelete = () => {
+      fetchProducts();
+    };
+
+    socket.on('stock-updated', handleStockUpdate);
+    socket.on('product-updated', handleProductUpdate);
+    socket.on('product-created', handleProductCreate);
+    socket.on('product-deleted', handleProductDelete);
+
+    return () => {
+      socket.off('stock-updated', handleStockUpdate);
+      socket.off('product-updated', handleProductUpdate);
+      socket.off('product-created', handleProductCreate);
+      socket.off('product-deleted', handleProductDelete);
+    };
+  }, []);
 
   const handleSearch = (q) => {
     const params = new URLSearchParams(searchParams);
