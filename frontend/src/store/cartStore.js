@@ -1,4 +1,4 @@
-const CART_KEY = 'remirind_cart';
+const CART_KEY = 'raymerce_cart';
 
 export const getCart = () => {
   try {

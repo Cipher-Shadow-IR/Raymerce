@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: remirind-store-backend
+    name: raymerce-store-backend
     env: node
     buildCommand: npm install
     startCommand: npm start

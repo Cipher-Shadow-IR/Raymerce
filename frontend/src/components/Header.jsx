@@ -52,7 +52,7 @@ function Header() {
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-2 text-xl font-bold text-indigo-600 dark:text-indigo-400">
             <FiPackage className="text-2xl" />
-            <span>Remirind Store</span>
+            <span>Raymerce</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">

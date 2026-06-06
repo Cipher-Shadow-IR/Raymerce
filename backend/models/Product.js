@@ -10,7 +10,7 @@ const productSchema = mongoose.Schema(
     image: {
       type: String,
       required: [true, 'Product image is required'],
-      default: 'https://via.placeholder.com/400x400?text=Remirind',
+      default: 'https://via.placeholder.com/400x400?text=Raymerce',
     },
     category: {
       type: String,

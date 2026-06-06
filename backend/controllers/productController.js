@@ -54,7 +54,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   const product = await Product.create({
     name,
-    image: image || 'https://via.placeholder.com/400x400?text=Remirind',
+    image: image || 'https://via.placeholder.com/400x400?text=Raymerce',
     category,
     price,
     description,

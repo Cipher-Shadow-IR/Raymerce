@@ -1,4 +1,4 @@
-# Remirind Store - MERN E-Commerce Application
+# Raymerce Store - MERN E-Commerce Application
 
 A full-stack e-commerce application built with the MERN stack (MongoDB, Express.js, React, Node.js).
 
@@ -79,7 +79,7 @@ A full-stack e-commerce application built with the MERN stack (MongoDB, Express.
 ## 📁 Project Structure
 
 ```
-Remirind-Store/
+Raymerce-Store/
 ├── backend/
 │   ├── config/
 │   │   └── db.js               # MongoDB connection
@@ -182,8 +182,8 @@ Remirind-Store/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/remirind-store.git
-cd remirind-store
+git clone https://github.com/yourusername/raymerce-store.git
+cd raymerce-store
 ```
 
 2. Install backend dependencies:
@@ -224,7 +224,7 @@ npm run dev
 8. Open http://localhost:3000 in your browser
 
 ### Demo Credentials
-- **Admin:** admin@remirind.com / admin123
+- **Admin:** admin@raymerce.com / admin123
 - **User:** user@test.com / user123
 
 ## ☁️ Deployment
@@ -259,7 +259,7 @@ Alternatively, use the included `render.yaml`:
    - **Build Command:** `npm run build`
    - **Output Directory:** `dist`
 4. Add environment variable:
-   - `VITE_API_URL`: Your Render backend URL (e.g., `https://remirind-store.onrender.com/api`)
+   - `VITE_API_URL`: Your Render backend URL (e.g., `https://raymerce-store.onrender.com/api`)
 5. Deploy
 
 The `vercel.json` at the root handles SPA routing (all routes fallback to index.html).

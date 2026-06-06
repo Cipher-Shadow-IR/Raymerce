@@ -90,7 +90,7 @@ function LoginPage() {
 
         <div className="mt-4 p-3 bg-gray-50 dark:bg-slate-700 rounded-lg text-xs text-gray-500 dark:text-gray-400">
           <p className="font-medium mb-1">Demo Credentials:</p>
-          <p>Admin: admin@remirind.com / admin123</p>
+          <p>Admin: admin@raymerce.com / admin123</p>
           <p>User: user@test.com / user123</p>
         </div>
       </div>

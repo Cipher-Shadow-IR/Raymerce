@@ -1,7 +1,7 @@
 {
-  "name": "remirind-store-backend",
+  "name": "raymerce-store-backend",
   "version": "1.0.0",
-  "description": "Remirind Store - E-commerce backend API",
+  "description": "Raymerce - E-commerce backend API",
   "type": "module",
   "main": "server.js",
   "scripts": {

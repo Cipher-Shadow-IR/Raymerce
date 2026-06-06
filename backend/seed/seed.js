@@ -8,7 +8,7 @@ dotenv.config();
 const users = [
   {
     name: 'Admin User',
-    email: 'admin@remirind.com',
+    email: 'admin@raymerce.com',
     password: 'admin123',
     isAdmin: true,
   },

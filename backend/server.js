@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'Remirind Store API is running' });
+  res.json({ message: 'Raymerce API is running' });
 });
 
 app.use('/api/auth', authRoutes);
