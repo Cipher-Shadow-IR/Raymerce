@@ -9,7 +9,8 @@ import orderRoutes from './routes/orderRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 import { initSocket } from './socket.js';
-import startDailyStockRefill from './cronJobs.js';
+import startDailyStockRefill, { runStockRefill } from './cronJobs.js';
+import { protect, admin } from './middleware/authMiddleware.js';
 
 dotenv.config();
 
@@ -21,8 +22,27 @@ const server = http.createServer(app);
 app.use(cors());
 app.use(express.json());
 
+app.get('/api', (req, res) => {
+  res.status(200).json({
+    success: true,
+    name: 'Remirind API',
+    version: '1.0.0',
+    status: 'Running',
+    documentation: '/api/health'
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ message: 'Raymerce API is running' });
+});
+
+app.post('/api/stock/refill', protect, admin, async (req, res) => {
+  try {
+    const result = await runStockRefill();
+    res.json({ success: true, modifiedCount: result.modifiedCount });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 });
 
 app.use('/api/auth', authRoutes);
