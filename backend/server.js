@@ -25,7 +25,7 @@ app.use(express.json());
 app.get('/api', (req, res) => {
   res.status(200).json({
     success: true,
-    name: 'Remirind API',
+    name: 'Raymerce API',
     version: '1.0.0',
     status: 'Running',
     documentation: '/api/health'
